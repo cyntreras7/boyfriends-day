@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Boyfriend's Day</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <style>
+        h1 {
+            font-size: clamp(36px, 10vw, 60px);
+            ;
+            font-family: 'Dancing Script', cursive;
+            margin: 0 0 10px;
+
+        }
+
+        body {
+            background: #fde2e4;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .envelope {
+            cursor: pointer;
+            position: relative;
+            width: min(92vw, 480px);
+            height: 340px;
+            background: #e5989b;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            perspective: 800px;
+        }
+
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: #d77a7f;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            transition: transform 0.6s ease;
+            z-index: 2;
+        }
+
+        .envelope.opened::before {
+            transform: rotateX(180deg);
+        }
+
+        .card {
+            background: #fcdce7;
+            padding: 20px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+            position: absolute;
+            inset: 20px;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .envelope.opened .card {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .hint {
+            position: absolute;
+            inset: 25% 0 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            z-index: 2;
+            color: #fff;
+            font-family: 'Lobster Two', cursive;
+            font-size: 36px;
+            font-style: italic;
+            font-weight: 700;
+            text-align: center;
+            text-shadow:
+                2px 2px 0 #ff8fb8,
+                4px 4px 0 #c9184a;
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        .envelope.opened .hint {
+            display: none;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -20px;
+            color: #ff4d8d;
+            pointer-events: none;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            pointer-events: none;
+            z-index: 10;
+            animation: burst 1.8s ease-out forwards;
+        }
+
+        @keyframes burst {
+            to {
+                transform: translate(var(--x), var(--y)) rotate(var(--r));
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        .dog {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            z-index: 4;
+            width: 150px;
+            padding: 6px;
+            background: #fff0f5;
+            border: 4px solid #ff8fb8;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 60px);
+            transition: all 0.8s ease;
+        }
+
+        .envelope.dog-out .dog {
+            opacity: 1;
+            transform: translate(-50%, 10px);
+        }
+
+        .more-love {
+            margin-top: 14px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 999px;
+            background: #c9184a;
+            color: white;
+            font-family: 'Lobster Two', cursive;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="envelope">
+        <p class="hint">Toca para abrir 💌</p>
+        <img class="dog" src="dog.png" alt="Black German Shepherd">
+        <div class="card">
+            <h1>Happy Boyfriend's Day!!</h1>
+            <p>Te Amo mi cielo, me siento muy suertuda de tenerte en mi vida ❤️</p>
+            <button class="more-love">Click here for more love 🐾</button>
+        </div>
+    </div>
+
+    <script>
+        const envelope = document.querySelector('.envelope');
+        envelope.addEventListener('click', () => {
+            if (envelope.classList.contains('opened')) return;
+            envelope.classList.add('opened');
+            burstHearts();
+            setInterval(createHeart, 300);
+        });
+
+        function createHeart() {
+            const heart = document.createElement('span');
+            heart.classList.add('heart');
+            heart.textContent = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 14) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(heart);
+            heart.addEventListener('animationend', () => heart.remove());
+        }
+
+        function burstHearts() {
+            const hearts = ['❤', '💖', '💕', '💗', '🤍'];
+            for (let i = 0; i < 40; i++) {
+                const piece = document.createElement('span');
+                piece.classList.add('confetti');
+                piece.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                piece.style.fontSize = (Math.random() * 16 + 16) + 'px';
+                piece.style.setProperty('--x', (Math.random() - 0.5) * 700 + 'px');
+                piece.style.setProperty('--y', (Math.random() - 0.5) * 700 + 'px');
+                piece.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
+                document.body.appendChild(piece);
+                piece.addEventListener('animationend', () => piece.remove());
+            }
+        }
+
+        const moreLove = document.querySelector('.more-love');
+        moreLove.addEventListener('click', (event) => {
+            event.stopPropagation();
+
+            if (!envelope.classList.contains('dog-out')) {
+                envelope.classList.add('dog-out');
+                return;
+            }
+
+            burstHearts();
+        });
+    </script>
+</body>
+
+</html>
