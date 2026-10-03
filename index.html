@@ -194,50 +194,49 @@
 
     <script>
         const envelope = document.querySelector('.envelope');
-        envelope.addEventListener('click', () => {
-            if (envelope.classList.contains('opened')) return;
-            envelope.classList.add('opened');
-            burstHearts();
-            setInterval(createHeart, 300);
-        });
+envelope.addEventListener('click', () => {
+    if (envelope.classList.contains('opened')) return;
+    envelope.classList.add('opened');
+    burstHearts();
+    setInterval(createHeart, 300);
+});
 
-        function createHeart() {
-            const heart = document.createElement('span');
-            heart.classList.add('heart');
-            heart.textContent = '❤';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 14) + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            document.body.appendChild(heart);
-            heart.addEventListener('animationend', () => heart.remove());
-        }
+function createHeart() {
+    const heart = document.createElement('span');
+    heart.classList.add('heart');
+    heart.textContent = '❤';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (Math.random() * 20 + 14) + 'px';
+    heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+    document.body.appendChild(heart);
+    heart.addEventListener('animationend', () => heart.remove());
+}
 
-        function burstHearts() {
-            const hearts = ['❤', '💖', '💕', '💗', '🤍'];
-            for (let i = 0; i < 40; i++) {
-                const piece = document.createElement('span');
-                piece.classList.add('confetti');
-                piece.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                piece.style.fontSize = (Math.random() * 16 + 16) + 'px';
-                piece.style.setProperty('--x', (Math.random() - 0.5) * 700 + 'px');
-                piece.style.setProperty('--y', (Math.random() - 0.5) * 700 + 'px');
-                piece.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
-                document.body.appendChild(piece);
-                piece.addEventListener('animationend', () => piece.remove());
-            }
-        }
+function burstHearts(hearts = ['❤', '💖', '💕', '💗', '🤍']) {
+    for (let i = 0; i < 40; i++) {
+        const piece = document.createElement('span');
+        piece.classList.add('confetti');
+        piece.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        piece.style.fontSize = (Math.random() * 16 + 16) + 'px';
+        piece.style.setProperty('--x', (Math.random() - 0.5) * 700 + 'px');
+        piece.style.setProperty('--y', (Math.random() - 0.5) * 700 + 'px');
+        piece.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
+        document.body.appendChild(piece);
+        piece.addEventListener('animationend', () => piece.remove());
+    }
+}
 
-        const moreLove = document.querySelector('.more-love');
-        moreLove.addEventListener('click', (event) => {
-            event.stopPropagation();
+const moreLove = document.querySelector('.more-love');
+moreLove.addEventListener('click', (event) => {
+    event.stopPropagation();
 
-            if (!envelope.classList.contains('dog-out')) {
-                envelope.classList.add('dog-out');
-                return;
-            }
+    if (!envelope.classList.contains('dog-out')) {
+        envelope.classList.add('dog-out');
+        return;
+    }
 
-            burstHearts();
-        });
+    burstHearts(['🖤', '🐾']);
+});
     </script>
 </body>
 
